@@ -36,12 +36,15 @@ gem 'jbuilder', '~> 2.5'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
+
 # Use solidus for eCommerce https://github.com/solidusio/solidus
 gem 'solidus'
 gem 'solidus_auth_devise'
 
 # https://github.com/solidusio/solidus_gateway
 gem 'solidus_gateway'
+# braintree needed for solidus
+gem 'braintree'
 # https://github.com/solidusio/solidus_paypal_braintree
 gem 'solidus_paypal_braintree', github: 'solidusio/solidus_paypal_braintree', branch: :master
 # https://github.com/solidusio-contrib/solidus_stripe
