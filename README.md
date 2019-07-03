@@ -1,3 +1,12 @@
+bundle update
+bundle install
+bundle exec rails g spree:install
+bundle exec rails g solidus:auth:install
+bundle exec rake railties:install:migrations
+
+
+
+
 # README
 
 This README would normally document whatever steps are necessary to get the
