@@ -4,7 +4,11 @@ bundle exec rails g spree:install
 bundle exec rails g solidus:auth:install
 bundle exec rake railties:install:migrations
 
+rails g solidus_gateway:install
+rails g solidus_paypal_braintree:install
 
+
+### rails g solidus_stripe:install
 
 
 # README

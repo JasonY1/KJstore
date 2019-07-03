@@ -40,6 +40,14 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'solidus'
 gem 'solidus_auth_devise'
 
+# https://github.com/solidusio/solidus_gateway
+gem 'solidus_gateway'
+# https://github.com/solidusio/solidus_paypal_braintree
+gem 'solidus_paypal_braintree', github: 'solidusio/solidus_paypal_braintree', branch: :master
+# https://github.com/solidusio-contrib/solidus_stripe
+# gem "solidus_stripe"
+
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
