@@ -46,7 +46,8 @@ gem 'solidus_gateway'
 # using stripe payment model
 gem 'solidus_stripe', '~> 1.0.0'
 
-
+# adding line-engine(blog) https://github.com/opoloo/lines-engine
+gem 'lines-engine'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

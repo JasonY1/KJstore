@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
-mount SolidusPaypalBraintree::Engine, at: '/solidus_paypal_braintree'
-  
+
   root to: 'pages#Home'
   get 'program', to: 'pages#Program'
   get 'about', to: 'pages#About'
