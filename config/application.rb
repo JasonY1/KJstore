@@ -8,6 +8,23 @@ Bundler.require(*Rails.groups)
 
 module KJstore
   class Application < Rails::Application
+    # Load application's model / class decorators
+    initializer 'spree.decorators' do |app|
+      config.to_prepare do
+        Dir.glob(Rails.root.join('app/**/*_decorator*.rb')) do |path|
+          require_dependency(path)
+        end
+      end
+    end
+
+    # Load application's view overrides
+    initializer 'spree.overrides' do |app|
+      config.to_prepare do
+        Dir.glob(Rails.root.join('app/overrides/*.rb')) do |path|
+          require_dependency(path)
+        end
+      end
+    end
 
     config.to_prepare do
       # Load application's model / class decorators
