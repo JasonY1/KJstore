@@ -43,12 +43,8 @@ gem 'solidus_auth_devise'
 
 # https://github.com/solidusio/solidus_gateway
 gem 'solidus_gateway'
-# braintree needed for solidus
-gem 'braintree'
-# https://github.com/solidusio/solidus_paypal_braintree
-gem 'solidus_paypal_braintree', github: 'solidusio/solidus_paypal_braintree', branch: :master
-# https://github.com/solidusio-contrib/solidus_stripe
-# gem "solidus_stripe"
+# using stripe payment model
+gem 'solidus_stripe', '~> 1.0.0'
 
 
 group :development, :test do
