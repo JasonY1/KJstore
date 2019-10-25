@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  mount Lines::Engine => "/blog"
   root to: 'pages#Home'
   get 'program', to: 'pages#Program'
   get 'about', to: 'pages#About'

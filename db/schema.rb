@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_233026) do
+ActiveRecord::Schema.define(version: 2019_10_25_202230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,45 +39,65 @@ ActiveRecord::Schema.define(version: 2019_07_03_233026) do
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
-    t.string "sluggable_type", limit: 50
-    t.string "scope"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
-    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
-    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.string "sluggable_type", limit: 40
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", unique: true
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "solidus_paypal_braintree_configurations", id: :serial, force: :cascade do |t|
-    t.boolean "paypal", default: false, null: false
-    t.boolean "apple_pay", default: false, null: false
-    t.integer "store_id", null: false
+  create_table "lines_articles", id: :serial, force: :cascade do |t|
+    t.string "title"
+    t.string "sub_title"
+    t.text "content"
+    t.boolean "published", default: false
+    t.datetime "published_at"
+    t.string "hero_image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "credit_card", default: false, null: false
-    t.index ["store_id"], name: "index_solidus_paypal_braintree_configurations_on_store_id"
+    t.string "slug"
+    t.string "gplus_url"
+    t.boolean "featured", default: false
+    t.string "document"
+    t.string "short_hero_image"
+    t.text "teaser"
+    t.index ["slug"], name: "index_lines_articles_on_slug", unique: true
   end
 
-  create_table "solidus_paypal_braintree_customers", id: :serial, force: :cascade do |t|
-    t.integer "user_id"
-    t.string "braintree_customer_id"
-    t.index ["braintree_customer_id"], name: "index_braintree_customers_on_braintree_customer_id", unique: true
-    t.index ["user_id"], name: "index_braintree_customers_on_user_id", unique: true
-  end
-
-  create_table "solidus_paypal_braintree_sources", id: :serial, force: :cascade do |t|
-    t.string "nonce"
-    t.string "token"
-    t.string "payment_type", null: false
-    t.integer "user_id"
-    t.integer "customer_id"
-    t.integer "payment_method_id", null: false
+  create_table "lines_authorables", id: :serial, force: :cascade do |t|
+    t.integer "author_id"
+    t.integer "article_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["customer_id"], name: "index_solidus_paypal_braintree_sources_on_customer_id"
-    t.index ["payment_method_id"], name: "index_solidus_paypal_braintree_sources_on_payment_method_id"
-    t.index ["user_id"], name: "index_solidus_paypal_braintree_sources_on_user_id"
+    t.index ["article_id"], name: "index_lines_authorables_on_article_id"
+    t.index ["author_id"], name: "index_lines_authorables_on_author_id"
+  end
+
+  create_table "lines_authors", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "description"
+    t.string "gplus_profile"
+  end
+
+  create_table "lines_pictures", id: :serial, force: :cascade do |t|
+    t.string "image"
+    t.string "name"
+    t.integer "article_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_lines_pictures_on_article_id"
+  end
+
+  create_table "lines_users", id: :serial, force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "reset_digest"
+    t.datetime "reset_sent_at"
   end
 
   create_table "spree_addresses", id: :serial, force: :cascade do |t|
@@ -931,7 +951,6 @@ ActiveRecord::Schema.define(version: 2019_07_03_233026) do
     t.integer "originator_id"
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
-    t.integer "update_reason_id"
     t.decimal "amount_remaining", precision: 8, scale: 2
     t.integer "store_credit_reason_id"
     t.index ["deleted_at"], name: "index_spree_store_credit_events_on_deleted_at"
@@ -951,12 +970,6 @@ ActiveRecord::Schema.define(version: 2019_07_03_233026) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["priority"], name: "index_spree_store_credit_types_on_priority"
-  end
-
-  create_table "spree_store_credit_update_reasons", id: :serial, force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6
-    t.datetime "updated_at", precision: 6
   end
 
   create_table "spree_store_credits", id: :serial, force: :cascade do |t|
@@ -1224,8 +1237,24 @@ ActiveRecord::Schema.define(version: 2019_07_03_233026) do
     t.datetime "updated_at", precision: 6
   end
 
+  create_table "taggings", id: :serial, force: :cascade do |t|
+    t.integer "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.string "tagger_type"
+    t.integer "tagger_id"
+    t.string "context", limit: 128
+    t.datetime "created_at"
+    t.index ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true
+  end
+
+  create_table "tags", id: :serial, force: :cascade do |t|
+    t.string "name"
+    t.integer "taggings_count", default: 0
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "solidus_paypal_braintree_sources", "spree_payment_methods", column: "payment_method_id"
   add_foreign_key "spree_promotion_code_batches", "spree_promotions", column: "promotion_id"
   add_foreign_key "spree_promotion_codes", "spree_promotion_code_batches", column: "promotion_code_batch_id"
   add_foreign_key "spree_tax_rate_tax_categories", "spree_tax_categories", column: "tax_category_id"

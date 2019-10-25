@@ -8,4 +8,4 @@
 //= require rails-ujs
 //= require spree/frontend
 //= require_tree .
-//= require solidus_paypal_braintree/frontend
+
