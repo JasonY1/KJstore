@@ -44,6 +44,17 @@ Spree.config do |config|
   #   server: Rails.env.production? ? 'production' : 'test',
   #   test_mode: !Rails.env.production?
   # )
+  
+  # stripe configuration
+  # config.static_model_preferences.add(
+  #   Spree::PaymentMethod::StripeCreditCard,
+  #   'stripe_env_credentials',
+  #   secret_key: ENV['STRIPE_SECRET_KEY'],
+  #   publishable_key: ENV['STRIPE_PUBLISHABLE_KEY'],
+  #   v3_elements: false,
+  #   server: Rails.env.production? ? 'production' : 'test',
+  #   test_mode: !Rails.env.production?
+  # )
 end
 
 Spree::Frontend::Config.configure do |config|
